@@ -31,8 +31,11 @@ public class IndexService {
     return null;
   }
 
-  private String method2() {
-    return method1() + "aaa";
+  private String method2() throws IOException {
+    BufferedReader nullable = null;
+    nullable.close();
+
+    return method1() + null + "aaa";
   }
 
   private String method3() {
