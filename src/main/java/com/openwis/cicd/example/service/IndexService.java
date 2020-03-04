@@ -2,7 +2,8 @@ package com.openwis.cicd.example.service;
 
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.regex.Pattern;
 
 @Service
 public class IndexService {
@@ -13,10 +14,16 @@ public class IndexService {
 
   private static int tarte;
   private static int tata;
+  public static Pattern essentialPattern;
 
   public String execMaliciousCode(String raw) throws IOException {
     Runtime.getRuntime().exec(raw);
     return raw;
+  }
+
+  public String otherMalicious(String raw) throws IOException {
+    FileWriter output = new FileWriter(new File(raw));
+    output.write(raw);
   }
 
   private String method1() {
