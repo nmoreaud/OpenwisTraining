@@ -24,6 +24,7 @@
     </sonar.dependencyCheck.reportPath>
     <sonar.dependencyCheck.htmlReportPath>${project.build.directory}/dependency-check-report.html
     </sonar.dependencyCheck.htmlReportPath>
+    <sonar.coverage.exclusions>src/main/com/openwis/cicd/example/Main.java</sonar.coverage.exclusions>
   </properties>
 
   <dependencies>
@@ -58,7 +59,7 @@
         <version>${jacoco-maven-plugin.version}</version>
         <configuration>
           <excludes>
-            <exclude>**/*com/openwis/cicd/example/Main.class</exclude>
+            <exclude>com/openwis/cicd/example/Main.class</exclude>
           </excludes>
         </configuration>
         <executions>
