@@ -8,4 +8,6 @@ public class IndexService {
   public int sumNumbers(int number1, int number2) {
     return number1 + number2;
   }
+
+  private static int toto;
 }
