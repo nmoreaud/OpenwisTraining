@@ -4,9 +4,9 @@ jdk: openjdk11
 
 addons:
   sonarcloud:
-    organization: "nnmoreaud"
+    organization: "nmoreaud"
     token:
-      552a01a3731b90a972c91e892cb035865f758f5c
+      secure: "VPq7W15feeWUpnYo4TfB75qtqFsDmeDjiESx4lHwIe4oLvAWlvyMyVghKP32wS34bcgKufieNvOFZKzFMxj1kKM9z/1tO0FkMzJJ1TLhWN9/4TOqqxvYR9fwMFkulFH393ismYaEEfPs88hqKbHYApr9PbYaTPTpVsWETt6d/fB78B3ONhiUB1iywky2PPdh3vFw5G6FvDARlDBYYyrHTj5n3Mv+nGq5+qkN/Hbmck2GKw6osQIpADboVs7FlVbPulflx/34VuK9vkwnXETUDbbcrlfrl6j41GwhvkDoHoQpEvGnwOLfqVfaE6NrJVioWKNuiPyvek+b7gzat4jRRosSYTOENITaocfuur1hZrO6v8uBCkykyqiN3ZoLC1SUtN2Milu2Anwv2GeluxThmPnnWPok6AQ7qcjJSpEHG5ly17fPLp9iwctxFotjD/yt3JCBvCZF27R+3mBZT5EQeWUu/mrCC7m0rfQz+wOQs44FPcMihgfG8tjdn7y3NdtGE5pVVHxxuWWr+aARXhPb8wBPYndd/k9hM27UiYH6kfdra8dBw4BoldLB9ZS5oT99ompomilmmNipFSKZI1QqnrWDJP1OK2FRAwCcbvnzLQHFD8ELLOpFKIrRf1TWkkNm7ZhTu8jy1HmvSRRQnzY/V4uCbGcJpeRip0YWNNHJvIM="
 
 script:
   - ./mvnw clean install sonar:sonar -Dsonar.projectKey=nmoreaud_OpenwisTraining
