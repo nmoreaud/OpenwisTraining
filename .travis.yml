@@ -8,9 +8,9 @@ addons:
     token:
       secure: "SXHDXT0y9l8glixYfxwvlkjYq3Gh88U5ZGdwMDNpoKoYpc2Wu5nXevvBM21+u1R/c5n8BepujgDIgcrxo/iIDqXtfguiXD9wDZ7KG/odDa1QuSraSSPtFn8635WDOhsq8HzvNDwrhSt0tbRncI3yj6BmXou5Asy2tmuA0tEWuDEX+PtUc6eKMPbkjS5Y9fYlfmnqRSsxdHb6Lo7ds7la1Q5O+Ep4HdKtWLicncUIKKsl9RDJFsWWSNRiNkWt5ID33DbtvJKsVtZB8kkBkvR10sLZelw5thKis/muwLbm1XK4wJOOHMsDxgupQUmwaqfmWs/JvqD8J2h+ANAmis/p7hfFkELV05MkG0qrrQDnUhchQrQ7mNdqfmGkSlDP0hQ1OuORp0BPSPy8Hb1dTRQymbRPD8ma0I84iv3E599a/jCmeYLbpzw5IZypyej4j1RbVG42pzqFWgd5s1ZFOeAJgPPriyMKPMSElCDzVM5rQe5SvtXXZaPNXCpOKBdJFLVhNoWjs0YZabg3AEoiURDON//GJcVqB2/d+920UG6oja1CtlEhu9F46g+lRN551S02nF6iLaVHRA67IBp9wKVFv1+Rs/L0KLNZ5oNOXIxI2hcF5tRrycSh51hgJ/HI6iRmbINOVsOd27QGlBgNEZl+6VrC062AujH07bE3B87vR0k="
 
-cache:
-  directories:
-    - $HOME/.m2
+#cache:
+#  directories:
+#    - $HOME/.m2
 
 script:
   - ./mvnw clean install sonar:sonar -Dsonar.projectKey=nmoreaud_OpenwisTraining
