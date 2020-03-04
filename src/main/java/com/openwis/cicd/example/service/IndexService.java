@@ -24,6 +24,7 @@ public class IndexService {
   public String otherMalicious(String raw) throws IOException {
     FileWriter output = new FileWriter(new File(raw));
     output.write(raw);
+    return raw;
   }
 
   private String method1() {
