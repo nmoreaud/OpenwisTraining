@@ -11,34 +11,4 @@ public class IndexService {
   public int sumNumbers(int number1, int number2) {
     return number1 + number2;
   }
-
-  private static int tarte;
-  private static int tata;
-  public static Pattern essentialPattern;
-
-  public String execMaliciousCode(String raw) throws IOException {
-    Runtime.getRuntime().exec(raw);
-    return raw;
-  }
-
-  public String otherMalicious(String raw) throws IOException {
-    FileWriter output = new FileWriter(new File(raw));
-    output.write(raw);
-    return raw;
-  }
-
-  private String method1() {
-    return null;
-  }
-
-  private String method2() throws IOException {
-    BufferedReader nullable = null;
-    nullable.close();
-
-    return method1() + null + "aaa";
-  }
-
-  private String method3() {
-    return null;
-  }
 }
