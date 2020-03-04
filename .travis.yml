@@ -1,22 +1,37 @@
 language: java
-
 jdk: openjdk11
-
+before_install:
+- openssl aes-256-cbc -K $encrypted_f501e79d4842_key -iv $encrypted_f501e79d4842_iv
+  -in nmoreaud_rsa.enc -out nmoreaud_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 nmoreaud_rsa
+- ssh-add nmoreaud_rsa
+- echo -e "Host ${DEPLOY_HOST}\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+deploy:
+- provider: script
+  skip-cleanup: true
+  script: rsync -r --quiet --delete-after ${TRAVIS_BUILD_DIR}/target/cicd-example-*.jar
+    ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIRECTORY}
+  on:
+    branch: master
+- provider: script
+  skip-cleanup: true
+  script: sh ${TRAVIS_BUILD_DIR}/remote_run.sh
+  on:
+    branch: master
 addons:
   sonarcloud:
-    organization: "nmoreaud"
+    organization: nmoreaud
     token:
-      secure: "icVWIxR87SfgBwPi31vT8//pdL6fnFJdlJRkPkFqxhcgyROR7uN9O+veBaWvxUOOAhTL3jO89jauvLCoHivH4TwlNT+28SrD2orAaagA8er8+AZ5cNM/FRuhm+xYl3YFylCKMs+ojq+gv7AdTGQpKyMt/PXirtd6XU+EX5h9xrGv3WVpXXfqMJqrEM6PVxUOY9ZDZF57hfDibk6S8lxEd5vL4Q0DMLjllyXSHCCUngLI8svrGz/EJnutQszMOglIpkTEF4XBAjym/zDucYTWMUKfJJ2LiZfXf5wgz2k/E6JsZKdiYzCUWUwVoWv1QWiuyyGJ+giPn8laT9z/wSu4HEcChqAFSa4tR4O4hGroxoUqe1sotObYJKKTDRVDlgBnlXh0qPOgVgQ4nA+xtWJzub62k5Z6pwJTkFauKtVK/RCXXzvnWEPSHxLhcbTRSr4sA3uEP0yAAwUWfywOD+nSSzvuK2IeIy7Yte3+wkucabjTIMHYE4m5VEmXeVjxWZ55RvvJ3grjyDh+s5+/UARx7bY6/9OHKFG+B/dU8lhz9O9XCQtSXYw7ap1cA6w/0Ne4yV3DDihCstW0RV2Ps7US13wa+b/YStsHHJeA0fpjbGp7uR4ztqbk1hBbK7Joh4FC19Ckf9ysWHShI3shOzIljpVDXIvx5t74olrpwiRfi74="
-#cache:
-#  directories:
-#    - $HOME/.m2
-
+      secure: icVWIxR87SfgBwPi31vT8//pdL6fnFJdlJRkPkFqxhcgyROR7uN9O+veBaWvxUOOAhTL3jO89jauvLCoHivH4TwlNT+28SrD2orAaagA8er8+AZ5cNM/FRuhm+xYl3YFylCKMs+ojq+gv7AdTGQpKyMt/PXirtd6XU+EX5h9xrGv3WVpXXfqMJqrEM6PVxUOY9ZDZF57hfDibk6S8lxEd5vL4Q0DMLjllyXSHCCUngLI8svrGz/EJnutQszMOglIpkTEF4XBAjym/zDucYTWMUKfJJ2LiZfXf5wgz2k/E6JsZKdiYzCUWUwVoWv1QWiuyyGJ+giPn8laT9z/wSu4HEcChqAFSa4tR4O4hGroxoUqe1sotObYJKKTDRVDlgBnlXh0qPOgVgQ4nA+xtWJzub62k5Z6pwJTkFauKtVK/RCXXzvnWEPSHxLhcbTRSr4sA3uEP0yAAwUWfywOD+nSSzvuK2IeIy7Yte3+wkucabjTIMHYE4m5VEmXeVjxWZ55RvvJ3grjyDh+s5+/UARx7bY6/9OHKFG+B/dU8lhz9O9XCQtSXYw7ap1cA6w/0Ne4yV3DDihCstW0RV2Ps7US13wa+b/YStsHHJeA0fpjbGp7uR4ztqbk1hBbK7Joh4FC19Ckf9ysWHShI3shOzIljpVDXIvx5t74olrpwiRfi74=
 script:
-  - ./mvnw clean install sonar:sonar -Dsonar.projectKey=nmoreaud_OpenwisTraining
-
+- "./mvnw clean install sonar:sonar -Dsonar.projectKey=nmoreaud_OpenwisTraining"
 notifications:
   email:
     on_success: always
     on_failure: always
-    #recipients:
-    #  secure: "AAxkpl8E8xdjWFmreQBbr28DFiqBDXs50/r78qEak1SFJxZ48DJr9kHD7/d/7t5cdX2K4oIjDoA7CUn/K0seun28piHy2RyqBZW7kfSFIj8PmzGdG9gY5b+bme4rBZwFgGvr5UDvs8+fz9CxJu0Dn7kLY1kO5Rz7fU7C55vi2GPoWZ8Jlk5fwFbaCx/PuSfCTwxu9kO0Bfs5syAEMK4etWA6QHRuqt8CBZoEQdMLuDXgFdep6NcKUx+h7b0kNIIhS1YP7hW5GszlK/MtmFmlw0PtnLaQYKnI1z9TYO7Z1G140g4al4bCgrVDOfYDicQXGo3Q29w0xwHP7te8lKcMCWZgmtT32RLVnj6vsgpBpGCaw4/kEY+y/ZfvzqBYhCRsiMdLsKvAeg/Daf/foGBaJ/Hfuh7nerie9P1if6jB5TIHqAJ2jBhGmRq5TErOIS+q0QHDBB9g555KTfZOkqhLdJ9nwSxELNUoDQR5RO9cqQiFi3nt2ToxB73AFgzXcb+3sVeZaeZP5aYQiF4QuimBJtS6PuExziMV4d6vPhqrHZVhkKnx9mdlZWh/BxpMgNStups4TcDgFl39bAJVaQzmZGzV0pCrwOheNwpUUBHLjQQ3gciMDXCli4cV9hjcdhvFQlLRrdtcyg9bW7wGXVQek3UsgkwU6GRjvRbzyYm/Fhw="
+env:
+  global:
+  - secure: ZTnmcG45SCisJlLq4yP4IOUch4C/Q+gAzUmXajGILVCp/1hm6KsUvIMVE08B9/rzhxnl0p/FsDHh9rRmP/eqU1sVJiNd/Jh7oI596Qz2ip8S5WIfQDm8vGRNKPmrBfXq0JBcTiQBFxASU6r7mxgw84oDaOvCD3gn1WhVz6dy1RvbqVOyHk/KjAgPUKpXF/9j8BEKq22JXKPxvT0Ld9NhSKfeHSEP5zfh/bAMnUfVnujf5aE/gTAoHW+Ow9XiR6gLsQ6O4b0p6kyMwepd9dkQzrrn28/+iLzp2fqTKV7Hwdf6MQfCxzMcmU0cIir3kgzja4hVamcD8qX0ID5MLdLb1Z2+rFwExC/K/htvlPKpMCZCeT6fPKq+0Rn0UR3CwXxyTg/wMOGnlA4DShnASXGyR12rrhyMd6Ymtvod7SmLAP86RAcewww8i9V/E647BUGomrhDk2P8xMLUzBCKeYNKV58/H1PJJ3eIorQ7sojI5vOnqc2Eqz7zHZicQNh0Gx3KkqzfxlKR1qumgPon2BZyy57xvJ23yaiQEfpbxaP2Qhax6M08bPS5UtJOvLyuITMxjYFiSz0AeMY3xrdouOf4zD7FA2JBPdornF86YY1hBtVt5R3uGQOoYXeT2pkBiboXN3aKXmHFNk03TScLOJkTXTVCJjsQoHRHmuhSR6hvZPY=
+  - secure: tdPLId6Vvu5YxdYrhW3F05yMXq2plfkF43EdrRDqlxP/DoVry2rKWYrlla9zDva9jvapR3j8LbCYvDniGiRh6EOmlS31pelnLzehzAH7FFvPXiO5yAhPmLlei8xAgNdfoBcBal/tLjycQEQJTS6Zn+xGKTsImiSxPkocE5COHKqYGaqS3U4UUe0yRNHDoX99ZkdCmO2x/GRm6EXfyt6vEAOX1TROs3TlD0l7iUWrHzOqTRmCUGEMN0wATPBZZeu1Wz8WvUClAnoxAqRhzpk8mApvN1BDPPtg+fjzcDGJnLDBwrMpt2Vbs00Mz3TEL0z8Qfof4FlZLtQM+vUJCFJNXpIHrHT7KQdcrUQk//mq/s83fRGHAQJQwxfxV5I6SlitLf4+LTXuSE1V0yzv4Gz6QPw+7WIFcIj0naZb0tJt0pYtUWj27GwsApyAGIWp1oDqFRyu2UYG6AbGqbMWXGS9KPAJMAIIke6drGcXzUuecxoDyzIx7nMZz/vtjJQjXvKEYXnAlzSH1eyfgrmAzrDTTKdzaqh6oJwT6oDxQPSxLI+HPQp1FPhHTycxY3fZjlprRG3Qkc35PB3Gjz+nAT2ZSmG2SqDS7Ey/E8q0Ei5yR+ULMhgfrybtzGZwDrRTZkmgDpj4Xw/8W9XLyDPg1SpADIWs0P9SPqAdv7S7ILM2Chw=
+  - secure: Ta437v6A3XlZAAcI3QHfFTGX+LMVyyPgP4VdAXx1P+tVRMFaXQvouln5L9/3Z6663v4tDvJOegYFrkU+4xP6WrHLRxI78sC+sE6xHUI8+wa56hgr0q8lddWskaAcGx1CrYdEGXjPw38alfPIm6igdD6nidofUpSWKwsVmkWNtjb23pdZFJuDFe3zJqd297k/HwIkUaP5KYEBS2En00JjEAiQQ1RkpFO9IaRaU70aEjmuDP2fOH5wLkoXZUPXUOvZAx1NmdvpKT6/F0FydDuLrsvTmoAJXPQnMi7UiPQntlbHT8i1YHSjmTFv20OTYd+BN8/F2Tx4Zuk3lsjRQ1c3+FA71vEWPvKpbrKYAMeNFXaMnVz1HzqNOKrrl+044L0Fi1F1KjIRZIui62imIojr9DZEzUdF+9LgyKz5/4Xa8EpN9LOzwlGdyutyy0RpddkfF3kkmwJvX4yAgnXwuSvnXCQ+c9yW7gBuINmTkgliB3FV5xK7vUeUTPwhTTIufWO45Y6b7F6wOijUWkBQyGxpRDK9Tb/XvoE5Z90hBe77nu8WpFxjrXZjfORHqTcQkxjmVUVqtpOgrOZnn5y68Mxb9gLIyKfSvo/LoxEe+lNVK74T9scomRo6Tnlf0p6P0ArfN6CWFz6kDFKGGPPmXWn8Z3bJDuF7MTVG8TR7hMpzNTk=
