@@ -9,5 +9,18 @@ public class IndexService {
     return number1 + number2;
   }
 
-  private static int toto;
+  private static int tarte;
+  private static int tata;
+
+  private String method1() {
+    return null;
+  }
+
+  private String method2() {
+    return null;
+  }
+
+  private String method3() {
+    return null;
+  }
 }
