@@ -6,7 +6,7 @@ addons:
   sonarcloud:
     organization: "nnmoreaud"
     token:
-      secure: "HQOKCGKmUZROhkDgt5d4p+e9m/aniE1s4ZJgLtxmI/iBXRxejOS9oKuOzya1sLDwwFl8EtHdBN0xGzVUBM+GEfjyBJwbXRu++YpbwSb4v2P1tBdnO69WUqNVXiyuakBsWfqcJxWlafHd/pR81Ue9rzIaMMZ4APAucBXDfgB5Hp8r3fwx7noOUTRvrUQ9L9fv7JkTvzdvHPk4OG6T5ewNNB2+/VHvJbp+065bIqXgEim2hSZgthNBfGY3CXTM8jtasmXpaS7VB4RxkAhLrhOT5z4gN8DmDsZBuBnOrDuWXQ9FJ1v7Kr85BhspykfCFumFAeSeMyzXxr4KDPPSRNf5NWwy3XsQpOjI8IfVZJSLH5q+Sxdh11G9++3ZO66oxLfeNAgEezt2oQyiL/LlwRsYyvq9Iaj5jHV8KwN5JmwtVe7SaYuaKIG2qJNdBdKWDp1IQ1h7MLDCk/IATNaQeblw7EHrLgcU8YVFs49VpPbknUrj4fJU8Hv7mqvV6bzbLWUyxuchBnfi+LXEaimeTDpsVQnbjaOW6x34P7LX7EXlwQMWY7Ldj2lHveWfmg7pslRLWRULTG4UeICltCwlIxBYJuvCLza2+pADkrBnIBEay0lG0apdkfNXmusxtXvoeP87zLtvN23RJkGaJZcFIem6bVj/DhQB0olNAGA0ycAvCQ0="
+      552a01a3731b90a972c91e892cb035865f758f5c
 
 script:
   - ./mvnw clean install sonar:sonar -Dsonar.projectKey=nmoreaud_OpenwisTraining
